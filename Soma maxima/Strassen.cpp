@@ -1,11 +1,11 @@
 #include <bits/stdc++.h>
-#define INF -1000000001
+#define INF -10000000001
 #define DEBUG cout << "AQUI" << endl;
 using namespace std;
 
 vector <vector <long long> > sumMatrix (vector <vector<long long> > vec, vector <vector <long long> > vec2 ){
 
-    vector <vector<long long> > aux(1000);
+    vector <vector<long long> > aux(10000);
 
     for(long long i=0;i<vec[0].size();i++){
         for(long long j=0;j<vec[0].size();j++){
@@ -18,7 +18,7 @@ vector <vector <long long> > sumMatrix (vector <vector<long long> > vec, vector 
 
 vector <vector <long long> > subMatrix (vector <vector<long long> > vec , vector<vector <long long> >  vec2 ){
 
-    vector <vector<long long> > aux(1000);
+    vector <vector<long long> > aux(10000);
 
     for(long long i=0;i<vec[0].size();i++){
         for(long long j=0;j<vec[0].size();j++){
@@ -33,21 +33,21 @@ vector <vector <long long> > subMatrix (vector <vector<long long> > vec , vector
 vector <vector<long long> > dividir(vector <vector<long long> > vec, vector <vector<long long> > vec2){
 
         if(vec[0].size()==1){
-            vector <vector<long long> > aux2(1000);
+            vector <vector<long long> > aux2(10000);
 
             aux2[0].push_back(vec[0][0]*vec2[0][0]);
 
             return aux2;
         }
 
-    vector <vector<long long> > A11(1000);
-    vector <vector<long long> > A12(1000);
-    vector <vector<long long> > A21(1000);
-    vector <vector<long long> > A22(1000);
-    vector <vector<long long> > B11(1000);
-    vector <vector<long long> > B12(1000);
-    vector <vector<long long> > B21(1000);
-    vector <vector<long long> > B22(1000);
+    vector <vector<long long> > A11(10000);
+    vector <vector<long long> > A12(10000);
+    vector <vector<long long> > A21(10000);
+    vector <vector<long long> > A22(10000);
+    vector <vector<long long> > B11(10000);
+    vector <vector<long long> > B12(10000);
+    vector <vector<long long> > B21(10000);
+    vector <vector<long long> > B22(10000);
 
 
     for(long long i=0; i<vec[0].size()/2;i++){
@@ -87,15 +87,15 @@ vector <vector<long long> > dividir(vector <vector<long long> > vec, vector <vec
 
 
 
-    vector <vector<long long> > P1(1000);
-    vector <vector<long long> > P2(1000);
-    vector <vector<long long> > P3(1000);
-    vector <vector<long long> > P4(1000);
-    vector <vector<long long> > P5(1000);
-    vector <vector<long long> > P6(1000);
-    vector <vector<long long> > P7(1000);
+    vector <vector<long long> > P1(10000);
+    vector <vector<long long> > P2(10000);
+    vector <vector<long long> > P3(10000);
+    vector <vector<long long> > P4(10000);
+    vector <vector<long long> > P5(10000);
+    vector <vector<long long> > P6(10000);
+    vector <vector<long long> > P7(10000);
 
-    vector <vector<long long> > aux3(1000);
+    vector <vector<long long> > aux3(10000);
 
 
     P1 = dividir(sumMatrix(A11,A22),sumMatrix(B11,B22));
@@ -105,12 +105,12 @@ vector <vector<long long> > dividir(vector <vector<long long> > vec, vector <vec
     P5 = dividir(sumMatrix(A11,A12),B22);
     P6 = dividir(subMatrix(A21,A11),sumMatrix(B11,B12));
     P7 = dividir(subMatrix(A12,A22),sumMatrix(B21,B22));
-    vector <vector <long long> > C11(1000);
-    vector <vector <long long> > C12(1000);
-    vector <vector <long long> > C21(1000);
-    vector <vector <long long> > C22(1000);
+    vector <vector <long long> > C11(10000);
+    vector <vector <long long> > C12(10000);
+    vector <vector <long long> > C21(10000);
+    vector <vector <long long> > C22(10000);
 
-    vector <vector <long long> > aux(1000);
+    vector <vector <long long> > aux(10000);
     C11 = sumMatrix(subMatrix(sumMatrix(P1,P4),P5),P7);
     C12 = sumMatrix(P3,P5);
     C21 = sumMatrix(P2,P4);
@@ -161,7 +161,7 @@ vector <vector<long long> > dividir(vector <vector<long long> > vec, vector <vec
 }
 
 vector < vector<long long> > verificarMatriz(vector < vector<long long> > vec,long long tamanho){
-    vector < vector<long long> > aux(1000);
+    vector < vector<long long> > aux(10000);
     aux=vec;
 
     long long potencia=2;
@@ -193,8 +193,8 @@ vector < vector<long long> > verificarMatriz(vector < vector<long long> > vec,lo
 int main(){ //Strassen algorithm
     //Funciona apenas com matrizes 2^n
 
-    vector < vector<long long> > vec(1000);
-    vector < vector<long long> > vec2(1000);
+    vector < vector<long long> > vec(10000);
+    vector < vector<long long> > vec2(10000);
 
     long long count = 0;
     long long tam;
@@ -220,13 +220,13 @@ int main(){ //Strassen algorithm
             vec2[i].push_back(element);
         }
     }
-    vector < vector<long long> > auxiliar(1000);
-    vector < vector<long long> > auxiliar2(1000);
+    vector < vector<long long> > auxiliar(10000);
+    vector < vector<long long> > auxiliar2(10000);
 
     auxiliar = verificarMatriz(vec,tamanho);
     auxiliar2 = verificarMatriz(vec2,tamanho);
 
-    vector <vector <long long> > resultado(1000);
+    vector <vector <long long> > resultado(10000);
     resultado = dividir(auxiliar,auxiliar2);
 
     for(long long i=0;i<tamanho;i++){

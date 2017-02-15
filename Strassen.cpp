@@ -1,11 +1,11 @@
 #include <bits/stdc++.h>
-#define INF -1000000001
+#define INF -10000000001
 #define DEBUG cout << "AQUI" << endl;
 using namespace std;
 
 vector <vector <long long> > sumMatrix (vector <vector<long long> > vec, vector <vector <long long> > vec2 ){
 
-    vector <vector<long long> > aux(1000);
+    vector <vector<long long> > aux(vec[0].size());
 
     for(long long i=0;i<vec[0].size();i++){
         for(long long j=0;j<vec[0].size();j++){
@@ -18,7 +18,7 @@ vector <vector <long long> > sumMatrix (vector <vector<long long> > vec, vector 
 
 vector <vector <long long> > subMatrix (vector <vector<long long> > vec , vector<vector <long long> >  vec2 ){
 
-    vector <vector<long long> > aux(1000);
+    vector <vector<long long> > aux(vec[0].size());
 
     for(long long i=0;i<vec[0].size();i++){
         for(long long j=0;j<vec[0].size();j++){
@@ -33,21 +33,21 @@ vector <vector <long long> > subMatrix (vector <vector<long long> > vec , vector
 vector <vector<long long> > dividir(vector <vector<long long> > vec, vector <vector<long long> > vec2){
 
         if(vec[0].size()==1){
-            vector <vector<long long> > aux2(1000);
+            vector <vector<long long> > aux2(vec[0].size());
 
             aux2[0].push_back(vec[0][0]*vec2[0][0]);
 
             return aux2;
         }
 
-    vector <vector<long long> > A11(1000);
-    vector <vector<long long> > A12(1000);
-    vector <vector<long long> > A21(1000);
-    vector <vector<long long> > A22(1000);
-    vector <vector<long long> > B11(1000);
-    vector <vector<long long> > B12(1000);
-    vector <vector<long long> > B21(1000);
-    vector <vector<long long> > B22(1000);
+    vector <vector<long long> > A11((int)vec[0].size());
+    vector <vector<long long> > A12((int)vec[0].size());
+    vector <vector<long long> > A21((int)vec[0].size());
+    vector <vector<long long> > A22((int)vec[0].size());
+    vector <vector<long long> > B11((int)vec[0].size());
+    vector <vector<long long> > B12((int)vec[0].size());
+    vector <vector<long long> > B21((int)vec[0].size());
+    vector <vector<long long> > B22((int)vec[0].size());
 
 
     for(long long i=0; i<vec[0].size()/2;i++){
@@ -66,7 +66,8 @@ vector <vector<long long> > dividir(vector <vector<long long> > vec, vector <vec
         }
     }
 
-    long long linha=0;
+//DEBUG;
+    int linha=0;
     for(long long i=vec[0].size()/2;i<vec[0].size();i++){
         for(long long j=0;j<vec[0].size()/2;j++){
             A21[linha].push_back(vec[i][j]);
@@ -74,6 +75,7 @@ vector <vector<long long> > dividir(vector <vector<long long> > vec, vector <vec
         }
         linha++;
     }
+//DEBUG;
 
     linha=0;
     long long coluna=0;
@@ -84,18 +86,18 @@ vector <vector<long long> > dividir(vector <vector<long long> > vec, vector <vec
         }
         linha++;
     }
+    //cout << "Passou da conc" << endl;
 
 
+    vector <vector<long long> > P1(vec[0].size());
+    vector <vector<long long> > P2(vec[0].size());
+    vector <vector<long long> > P3(vec[0].size());
+    vector <vector<long long> > P4(vec[0].size());
+    vector <vector<long long> > P5(vec[0].size());
+    vector <vector<long long> > P6(vec[0].size());
+    vector <vector<long long> > P7(vec[0].size());
 
-    vector <vector<long long> > P1(1000);
-    vector <vector<long long> > P2(1000);
-    vector <vector<long long> > P3(1000);
-    vector <vector<long long> > P4(1000);
-    vector <vector<long long> > P5(1000);
-    vector <vector<long long> > P6(1000);
-    vector <vector<long long> > P7(1000);
-
-    vector <vector<long long> > aux3(1000);
+    vector <vector<long long> > aux3(vec[0].size());
 
 
     P1 = dividir(sumMatrix(A11,A22),sumMatrix(B11,B22));
@@ -105,17 +107,17 @@ vector <vector<long long> > dividir(vector <vector<long long> > vec, vector <vec
     P5 = dividir(sumMatrix(A11,A12),B22);
     P6 = dividir(subMatrix(A21,A11),sumMatrix(B11,B12));
     P7 = dividir(subMatrix(A12,A22),sumMatrix(B21,B22));
-    vector <vector <long long> > C11(1000);
-    vector <vector <long long> > C12(1000);
-    vector <vector <long long> > C21(1000);
-    vector <vector <long long> > C22(1000);
-
-    vector <vector <long long> > aux(1000);
+    vector <vector <long long> > C11(vec[0].size());
+    vector <vector <long long> > C12(vec[0].size());
+    vector <vector <long long> > C21(vec[0].size());
+    vector <vector <long long> > C22(vec[0].size());
+    //cout <<"Passou dos PS"<<endl;
+    vector <vector <long long> > aux(vec[0].size());
     C11 = sumMatrix(subMatrix(sumMatrix(P1,P4),P5),P7);
     C12 = sumMatrix(P3,P5);
     C21 = sumMatrix(P2,P4);
     C22 = sumMatrix(subMatrix(P1,P2),sumMatrix(P3,P6));
-
+    //cout << "Passou dos CS" << endl;
     long long m=0,n=0;
 
     for(long long i=0;i<C11[0].size();i++){
@@ -160,9 +162,7 @@ vector <vector<long long> > dividir(vector <vector<long long> > vec, vector <vec
     return aux;
 }
 
-vector < vector<long long> > verificarMatriz(vector < vector<long long> > vec,long long tamanho){
-    vector < vector<long long> > aux(1000);
-    aux=vec;
+int verificarMatriz(vector < vector<long long> > vec,long long tamanho){
 
     long long potencia=2;
     long long contador=1;
@@ -170,31 +170,44 @@ vector < vector<long long> > verificarMatriz(vector < vector<long long> > vec,lo
     while(potencia<=tamanho){
         potencia*=2;
             if(potencia==tamanho){
-                return aux;
+                return tamanho;
             } else if (potencia>tamanho){
                 long long qt = potencia-tamanho;
-                for(long long i=0;i<tamanho;i++){
+               return potencia;
+            }
+    }
+
+}
+
+vector < vector<long long> > alocarMatriz(vector < vector<long long> > vec, int tamanho1, int tamanho2){
+                int qt = tamanho2-tamanho1;
+
+                vector < vector<long long> > aux(tamanho2);
+                aux = vec;
+                //cout << "aux  size : " << aux[0].size();
+
+                for(long long i=0;i<tamanho1;i++){
                     for(long long j=0;j<qt;j++){
                         aux[i].push_back(0);
                     }
                 }
 
-                for(long long i=tamanho;i<potencia;i++){
-                    for(long long j=0;j<potencia;j++){
+                for(long long i=tamanho1;i<tamanho2;i++){
+                    for(long long j=0;j<tamanho2;j++){
                         aux[i].push_back(0);
                     }
                 }
-            }
-    }
 
-
+                return aux;
 }
+
+
 
 int main(){ //Strassen algorithm
     //Funciona apenas com matrizes 2^n
 
-    vector < vector<long long> > vec(1000);
-    vector < vector<long long> > vec2(1000);
+    //vector < vector<long long> > vec(10000);
+    //vector < vector<long long> > vec2(10000);
 
     long long count = 0;
     long long tam;
@@ -202,6 +215,9 @@ int main(){ //Strassen algorithm
     cout << "Tamanho das matrizes : " << endl;
     long long tamanho;
     cin >> tamanho;
+
+    vector < vector<long long> > vec(tamanho+tamanho);
+    vector < vector<long long> > vec2(tamanho+tamanho);
 
     cout << "Primeira matriz : " << endl;
     for(long long i=0;i<tamanho;i++){
@@ -220,14 +236,18 @@ int main(){ //Strassen algorithm
             vec2[i].push_back(element);
         }
     }
-    vector < vector<long long> > auxiliar(1000);
-    vector < vector<long long> > auxiliar2(1000);
 
-    auxiliar = verificarMatriz(vec,tamanho);
-    auxiliar2 = verificarMatriz(vec2,tamanho);
+    int tamanho2 = verificarMatriz(vec,tamanho);
 
-    vector <vector <long long> > resultado(1000);
+    vector < vector<long long> > auxiliar(tamanho2+1);
+    vector < vector<long long> > auxiliar2(tamanho2+1);
+
+    auxiliar = alocarMatriz(vec,tamanho,tamanho2);
+    auxiliar2 = alocarMatriz(vec2,tamanho,tamanho2);
+
+    vector <vector <long long> > resultado(tamanho2);
     resultado = dividir(auxiliar,auxiliar2);
+
 
     for(long long i=0;i<tamanho;i++){
         for(long long j=0;j<tamanho;j++){
