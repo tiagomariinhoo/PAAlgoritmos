@@ -215,16 +215,16 @@ int main(){ //Strassen algorithm
     cout << "Tamanho das matrizes : " << endl;
     long long tamanho;
     cin >> tamanho;
-
-    vector < vector<long long> > vec(tamanho+tamanho);
-    vector < vector<long long> > vec2(tamanho+tamanho);
+    tamanho=256;
+    vector < vector<long long> > vec(tamanho);
+    vector < vector<long long> > vec2(tamanho);
 
     cout << "Primeira matriz : " << endl;
     for(long long i=0;i<tamanho;i++){
         for(long long j=0;j<tamanho;j++){
             long long element;
-            cin >> element;
-            vec[i].push_back(element);
+            //cin >> element;
+            vec[i].push_back(j);
         }
     }
 
@@ -232,8 +232,8 @@ int main(){ //Strassen algorithm
     for(long long i=0;i<tamanho;i++){
         for(long long j=0;j<tamanho;j++){
             long long element;
-            cin >> element;
-            vec2[i].push_back(element);
+            //cin >> element;
+            vec2[i].push_back(j);
         }
     }
 
