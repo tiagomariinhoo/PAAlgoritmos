@@ -7,6 +7,7 @@ int main()
 		double total = 0,fuel =0;
 		double leak=0;
 		string linha;
+		double atual=0;
 	while(1){
 		string anterior;
 			double n;
@@ -18,8 +19,14 @@ int main()
 
 			//cout << "N : " << n << endl;
 			//cout << "Linha : " << linha << endl;
-				total += (n-n_anterior)*leak;
-				total += ((n-n_anterior)*fuel)/100;
+				atual += (n-n_anterior)*leak;
+				atual += ((n-n_anterior)*fuel)/100;
+
+//				cout << "Atual : " << atual << endl;
+//				cout << "Total : " << total << endl;
+
+				if(atual>total) total=atual;
+
 
 				if(linha[0] == 'F') {
 
@@ -35,13 +42,20 @@ int main()
 				} else if (linha[0]=='M'){
 					leak=0;
 				} else if (linha=="Goal"){
-					printf ("%.3f\n",total);
+/*					cout << "Total : " << total << endl;
+					cout << "Atual : " << atual << endl;
+					cout << "Fuel : " << fuel << endl;
+					cout << "Leak : " << leak << endl;
+*/					printf ("%.3f\n",total);
 
 					total=0;
 					leak=0;
 					fuel=0;
+					atual=0;
+					
 				} else if (linha[0]=='G'){				
-					total=0;
+					//total=0;
+					atual=0;
 						string aux;
 							cin >> aux;
 							getchar();
