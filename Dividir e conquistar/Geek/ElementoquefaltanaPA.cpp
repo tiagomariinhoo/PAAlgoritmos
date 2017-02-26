@@ -22,7 +22,8 @@ int main()
 						for(int i=1;i<vec.size();i++){
 							if(vec[i]-vec[i-1]!=razao){
 								cout << vec[i]-razao << endl;
-							}
+								break;
+}
 						}
 
 			}
