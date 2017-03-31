@@ -1,0 +1,130 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define DEBUG if(0)
+
+struct t_aresta{
+    int dis;
+    int x, y;
+    int visited;
+};
+
+bool comp(t_aresta a, t_aresta b){ return a.dis < b.dis; }
+
+#define MAXN 200200
+#define MAXM 200200
+
+int n, m;
+t_aresta aresta[MAXM];
+
+int pai[MAXN];
+int peso[MAXN];
+
+t_aresta mst[MAXM];
+
+int procurar(int x){
+    if(pai[x] == x) return x;
+    return pai[x] = procurar(pai[x]);
+}
+
+void join(int a, int b){
+
+    a = procurar(a);
+    b = procurar(b);
+
+    if(peso[a] < peso[b]) pai[a] = b;
+    else if(peso[b] < peso[a]) pai[b] = a;
+    else{
+        pai[a] = b;
+        peso[b]++;
+    }
+
+}
+
+int main(){
+
+    int cases;
+        cin >> cases;
+    int k=1;
+        while(k!=cases+1){
+
+            int a;
+
+            cin >> n >> m >> a;
+
+            vector < pair < int , int > > tes;
+
+            for(int i = 1;i <= m;i++){
+                cin >> aresta[i].x >> aresta[i].y >> aresta[i].dis;
+                aresta[i].visited=0;
+            }
+
+            for(int i = 1;i <= n;i++) pai[i] = i;
+
+            sort(aresta+1, aresta+m+1, comp);
+
+
+            int tam = 1;
+            int qt_a = n;
+            int contador=0;
+
+            set < int > mySet;
+            set < int > :: iterator it,it2;
+
+            for(int i = 1;i <= m;i++){
+
+                if( procurar(aresta[i].x) != procurar(aresta[i].y) ){
+
+                	if(a>aresta[i].dis){
+	                    join(aresta[i].x, aresta[i].y);
+
+	                    mst[tam] = aresta[i];
+	                    contador+=mst[tam].dis;
+	                  	
+	                  	DEBUG cout << "Qt a inicio : " << qt_a << endl;
+
+	                  	DEBUG cout << "Aresta x : " << aresta[i].x << endl;
+	                  	DEBUG cout << "Aresta y : " << aresta[i].y << endl;
+	                  	
+	                  	if(mySet.size()==0) qt_a--;
+	                  	else {
+	                  		it = mySet.find(aresta[i].x);
+	                  		it2 = mySet.find(aresta[i].y);
+
+	                  		aresta[i].x = aresta[i].y;
+
+	                  		DEBUG cout << "It1 : " << *it << endl;
+	                  		DEBUG cout << "It2  : " << *it2 << endl;
+	                  		
+	                  		 if (it!=mySet.end() && it2!=mySet.end()){
+	                  			qt_a--;
+	                  		} else if(it!=mySet.end() && it2==mySet.end() || it2!=mySet.end() && it==mySet.end()){
+	                  			DEBUG cout << "Primeiro if : " << endl;
+	                  			qt_a--;
+	                  		} else if (it==mySet.end() && it2==mySet.end()){
+	                  			qt_a--;
+	                  		}
+	                  	}
+
+
+
+	                    mySet.insert(aresta[i].x);
+	                    mySet.insert(aresta[i].y);
+
+	                    tam++;
+	                    }
+                	} else {
+
+                	}
+
+                }
+
+			if(qt_a<=0) qt_a=1;
+
+            cout << "Case #" << k << ": " << contador+(a*qt_a) << " " <<  qt_a <<endl;
+
+        k++;
+        }
+
+
+    return 0;
+}
