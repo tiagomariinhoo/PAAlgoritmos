@@ -1,0 +1,30 @@
+#include <bits/stdc++.h>
+using namespace std;
+int a[100000];
+bool can(int k, int n){
+    for(int i = 1; i <=n; ++i){
+        if(a[i]-a[i-1] > k)return false;
+        if(a[i]-a[i-1] == k)--k;
+    }
+    return true;
+}
+void solve(int tc){
+    int n;
+    scanf("%d", &n);
+    for(int i = 1; i <=n; ++i)scanf("%d", a+i);
+    int lf = 1;
+    int rg = a[n]+10;
+    int ans = a[n];
+    while(lf <= rg){
+        int mid = (lf+rg)/2;
+        if(can(mid, n))rg = mid-1, ans = mid;
+        else lf = mid+1;
+    }
+    printf("Case %d: %d\n", tc, ans);
+}
+int main(){
+    int tc;
+    scanf("%d", &tc);
+    for(int i = 1; i <=tc; ++i)solve(i);
+    return 0;
+}
