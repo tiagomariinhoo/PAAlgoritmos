@@ -26,30 +26,26 @@ int solve(int x, vi &c){
 	if(pd[x]>=0) return pd[x];
 
 	for(int i=0;i<sz(c);i++){
-		if(solve(x - c[i], c)) return pd[x - c[i]] = 1;
+		if(solve(x - c[i] , c)) return pd[x-c[i]] = 1;
 	}
-	return pd[x] = 0;
+	
+	return 0;
 }
 
 int main(){
-
-	int n,m;
-		cin >> n >> m;
-	vi c;
-		for(int i=0;i<n;i++){
-			int a;
-				cin >> a;	
-					c.pb(a);
-		}
-
-		int ans = 0;
-	for(int i=m-1;i>0;i--){
-		for(int i=0;i<=m;i++) pd[i] = -1;
-		if(!solve(i,c)) ans++;
+	int n;
+	vi vec;
+	int tot = 0;
+	for(int i=0;i<n;i++){
+		int a;
+			cin >> a;
+				vec.pb(a);
+		tot+=a;
 	}
+	for(int i=0;i<=tot;i++)pd[i] = -1;
 
-	cout << ans << endl;
-
+	if(solve(tot/2, vec)) cout << "YES" << endl;
+	else cout << "NO" << endl;
 
 	return 0;
 }
