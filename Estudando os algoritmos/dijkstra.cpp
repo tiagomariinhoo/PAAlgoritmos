@@ -1,60 +1,62 @@
-//Implementation for Dijkstra's SSSP(Single source shortest path) algorithm
-//This is an optimized algorithm running in O(E*log(V))
- 
-#include <iostream>
-#include <queue>
-#include <vector>
-#include <climits>
+#include <bits/stdc++.h>
 using namespace std;
-#define INF INT_MAX //Infinity
- 
-const int sz=10001; //Maximum possible number of vertices. Preallocating space for DataStructures accordingly
-vector<pair<int,int> > a[sz]; //Adjacency list
-int dis[sz]; //Stores shortest distance
-bool vis[sz]={0}; //Determines whether the node has been visited or not
- 
-void Dijkstra(int source, int n) //Algorithm for SSSP 
-{
-    for(int i=0;i<sz;i++) //Set initial distances to Infinity
-        dis[i]=INF;
-    //Custom Comparator for Determining priority for priority queue (shortest edge comes first)
-    class prioritize{public: bool operator ()(pair<int, int>&p1 ,pair<int, int>&p2){return p1.second>p2.second;}};
-    priority_queue<pair<int,int> ,vector<pair<int,int> >, prioritize> pq; //Priority queue to store vertex,weight pairs
-    pq.push(make_pair(source,dis[source]=0)); //Pushing the source with distance from itself as 0
-    while(!pq.empty())
-    {
-        pair<int, int> curr=pq.top(); //Current vertex. The shortest distance for this has been found
+
+#define DEBUG if(0)
+#define MAX 11000
+#define MAXN 120
+#define MIN -2000000
+#define INF 0x3f3f3f3f
+#define s(n) scanf("%d", &n)
+#define ss(a,b) scanf("%d %d",&a,&b)
+#define pb push_back
+#define mp make_pair
+#define sz(a) int(a.size())
+#define lli long long int
+typedef vector<int> vi;
+typedef vector<vi> vvi;
+typedef pair<int,int> ii;
+typedef pair<int, ii > iii;
+#define F first
+#define S second
+//g++ a.cpp -o a.exe && a.exe < in
+int n,m;
+vector < ii > adj[MAX];
+int dist[MAX];
+
+void dijk(int v){
+    dist[v] = 0;
+    priority_queue<ii , vector<ii> , greater<ii> > pq;
+    pq.push(mp(dist[v],v));
+
+    int u;
+    while(!pq.empty()){
+        u = pq.top().second;
         pq.pop();
-        int cv=curr.first,cw=curr.second; //'cw' the final shortest distance for this vertex
-        if(vis[cv]) //If the vertex is already visited, no point in exploring adjacent vertices
-            continue;
-        vis[cv]=true; 
-        for(int i=0;i<a[cv].size();i++) //Iterating through all adjacent vertices
-            if(!vis[a[cv][i].first] && a[cv][i].second+cw<dis[a[cv][i].first]) //If this node is not visited and the current parent node distance+distance from there to this node is shorted than the initial distace set to this node, update it
-                pq.push(make_pair(a[cv][i].first,(dis[a[cv][i].first]=a[cv][i].second+cw))); //Set the new distance and add to priority queue
+            for(ii p : adj[u]){
+                if(dist[p.S] > dist[u] + p.F){
+                    dist[p.S] = dist[u] + p.F;
+                    pq.push(mp(dist[p.S],p.F));
+                }
+            }
     }
 }
- 
-int main() //Driver Function for Dijkstra SSSP
-{
-    int n,m,x,y,w;//Number of vertices and edges
-    //cout<<"Enter number of vertices and edges in the graph\n";
-    cin>>n>>m;
-    for(int i=0;i<m;i++) //Building Graph
-    {
-        cin>>x>>y>>w; //Vertex1, Vertex2, weight of edge
-        a[x].push_back(make_pair(y,w));
-        a[y].push_back(make_pair(x,w));
+
+int main (){
+    cin >> n >> m;
+    for(int i=0;i<=n;i++) dist[i] = INF;
+
+    for(int i=0;i<m;i++){
+        int a,b,c;
+            cin >> a >> b >> c;
+                adj[a].pb(mp(c,b));
+                adj[b].pb(mp(c,a));
     }
-    //cout<<"Enter source for Dijkstra's SSSP algorithm\n";
-    int source;
-    cin>>source;
-    Dijkstra(source,n);//SSSP from source (Also passing number of vertices as parameter)
-    cout<<"Source is: "<<source<<". The shortest distance to every other vertex from here is: \n";
-    for(int i=1;i<=n;i++)//Printing final shortest distances from source
-    {
-        cout<<"Vertex: "<<i<<" , Distance: ";
-        dis[i]!=INF? cout<<dis[i]<<"\n" : cout<<"-1\n";
+
+    dijk(1);
+
+    for(int i=1;i<=n;i++){
+        cout << dist[i] << endl;
     }
+
     return 0;
 }

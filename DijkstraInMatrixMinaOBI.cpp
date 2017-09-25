@@ -36,6 +36,8 @@ int dijkstra(){
 	
 		if(d > dist[i][j]) continue;
 
+		int i_,j_;
+
 		//Verifica se está nos limites da matriz e encontra um novo menor caminho repete para os vizinhos
 		for(int p=0;p<4;p++){
 			i_ = i + dx[p];
@@ -60,7 +62,7 @@ int main (){
 	for(int i = 1; i <= n; i++)
 		for(int j =1; j <= n; j++)
 			s(tab[i][j]);
-		
+
 	cout << dijkstra() << endl;
 
 
