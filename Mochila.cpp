@@ -1,9 +1,9 @@
 #include <bits/stdc++.h>
 using namespace std;
 #define DEBUG if(0)
-#define MAX 1001
+#define MAX 100001
 #define MIN -2000000
-#define INF -9000000000000000000
+#define INF 90000000
 #define s(n) scanf("%d", &n)
 #define ss(a,b) scanf("%d %d",&a,&b)
 #define pb push_back
@@ -15,29 +15,33 @@ typedef vector<vi> vvi;
 typedef pair<int,int> ii;
 #define F first
 #define S second
-//g++ sol.cpp -std=c++11 -o sol.exe && sol.exe < in.txt
-int peso[MAX];
-int valor[MAX];
-int pd[MAX][MAX];
-int n,s;
 
-int knapsack(int obj, int aguenta){
-	if(pd[obj][aguenta] >= 0) return pd[obj][aguenta];
-	if(obj == n or aguenta == 0) return 0;
-	int nColoca = knapsack(obj+1, aguenta);
+int n,s;
+int peso[501];
+int valor[501];
+int pd[501][501];
+int ans = 0;
+int knap(int obj, int aguenta, int qt){
+	ans = max(ans, qt);
+	// cout << obj << " " << aguenta << endl;
+	if(pd[obj][aguenta]>=0) return pd[obj][aguenta];
+	if(!aguenta or obj == n) return pd[obj][aguenta] = 0;
+	int nColoca = knap(obj+1, aguenta, qt);
 
 	if(peso[obj] <= aguenta){
-		int coloca = valor[obj] + knapsack(obj+1, aguenta - peso[obj]);
-		return pd[obj][aguenta] = max(nColoca, coloca);
+		int coloca = valor[obj] + knap(obj+1, aguenta - peso[obj], qt+1);
+			return pd[obj][aguenta] = max(nColoca, coloca);
 	}
 	return pd[obj][aguenta] = nColoca;
 }
-
 int main(){
-	ss(s,n);
-	memset(pd, -1, sizeof pd);
-		for(int i=0;i<n;i++) ss(peso[i], valor[i]);
-	cout << knapsack(0, s) << endl;
+	ss(n,s);
+	memset(pd,-1,sizeof pd);
 
+	for(int i=0;i<n;i++) ss(valor[i], peso[i]);
+
+	cout << knap(0,s,0) << endl;
+	cout << ans << endl;
 	return 0;
 }
+
