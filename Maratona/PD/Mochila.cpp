@@ -38,7 +38,7 @@ int main(){
 	ss(n,s);
 	memset(pd,-1,sizeof pd);
 
-	for(int i=0;i<n;i++) ss(valor[i], peso[i]);
+	for(int i=1;i<=n;i++) ss(valor[i], peso[i]);
 
 	cout << knap(0,s,0) << endl;
 	cout << ans << endl;
