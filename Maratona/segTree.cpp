@@ -51,6 +51,50 @@ int query(int l, int r, int node=1, int start=1, int end = n){
 	int p2 = query(l, r, 2*node+1, mid+1, end);
 	return (p1+p2);
 }
+
+void lazyUpdate(int l, int r, int val, int node = 1, int start = 1, int end = n){
+	if(lazy[node]!=0){
+		tree[node] += (end - start + 1) * lazy[node];
+		if(start != end){
+			lazy[2*node] += lazy[node];
+			lazy[2*node+1] += lazy[node]; //Update nos filhos que precisam ser atualizados
+		}
+		lazy[node] = 0;
+	}
+
+	if(start > end or start > r or end < l) return ;
+	if(start >= l and end <= r){
+		tree[node] += (end - start + 1) * val; 
+		if(start != end){
+			lazy[2*node] += val;
+			lazy[2*node+1] += val;
+		return ;
+		}
+	}
+
+	int mid = (start + end) >> 1;
+	lazyUpdate(l,r,val,2*node, start,mid);
+	lazyUpdate(l,r,val,2*node+1, mid+1, end);
+	tree[node] = tree[2*node] + tree[2*node+1];
+}
+
+int lazyQuery(int l, int r, int node = 1 , int start = 1, int end = n){
+	if(start > end or start > r or end < l) return 0;
+	if(lazy[node]!=0){
+		tree[node] += (end - start + 1) * lazy[node];
+		if(start != end){
+			lazy[2*node] += lazy[node];
+			lazy[2*node+1] += lazy[node];
+		}
+		lazy[node] = 0;
+	}
+	if(start >= l and end <= r) return tree[node];
+	int mid = (start + end) >> 1;
+	int p1 = lazyQuery(l, r, 2*node, start, mid);
+	int p2 = lazyQuery(l, r, 2*node+1, mid+1, end);
+	return (p1+p2);
+}
+
 // LAZY PROPAGATION
 /*void updateRange(int node, int start, int end, int l, int r, int val){
 	if(lazy[node] != 0){

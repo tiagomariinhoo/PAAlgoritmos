@@ -1,0 +1,3 @@
+01/12/2017 - SegTree e Lazy Propagation (https://www.hackerearth.com/pt-br/practice/notes/segment-tree-and-lazy-propagation/)
+	- Questão : Caixa de moedas e banco do faraó (CodCad)
+
