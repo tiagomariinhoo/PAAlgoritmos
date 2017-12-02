@@ -1,3 +1,6 @@
 01/12/2017 - SegTree e Lazy Propagation (https://www.hackerearth.com/pt-br/practice/notes/segment-tree-and-lazy-propagation/)
 	- Questão : Caixa de moedas e banco do faraó (CodCad)
 
+02/12/2017 - Algoritmos Construtivos (longlong to String e String to LongLong), contest e contest da UFPE
+
+
