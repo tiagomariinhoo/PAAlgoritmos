@@ -3,4 +3,6 @@
 
 02/12/2017 - Algoritmos Construtivos (longlong to String e String to LongLong), contest e contest da UFPE
 
+03/12/2017 - PD Codeforces (Subsequência Inc)
+
 
