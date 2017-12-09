@@ -35,7 +35,7 @@ void dijk(int v){
             for(ii p : adj[u]){
                 if(dist[p.S] > dist[u] + p.F){
                     dist[p.S] = dist[u] + p.F;
-                    pq.push(mp(dist[p.S],p.F));
+                    pq.push(mp(dist[p.S],p.S));
                 }
             }
     }
