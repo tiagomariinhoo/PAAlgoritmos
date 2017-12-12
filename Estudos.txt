@@ -11,4 +11,9 @@
 
 06/12/2017 - Questões
 
+07-12/12/2017 - PD
+		- Contest, codeforces
+		- Contagem de inversões
+			- Balé (OBI/CodCad)
+			- Merge_sort
 
