@@ -19,7 +19,6 @@ typedef pair<int, ii > iii;
 #define F first
 #define S second
 vi vec;
-
 void upper(int x){
 	int com = 0;
 	int fim = sz(vec);
