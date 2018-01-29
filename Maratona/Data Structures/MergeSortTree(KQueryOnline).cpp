@@ -38,7 +38,6 @@ int n,m;
 
 vi tree[1000000];
 int a[250000];
-map<pair< int, pair<int, int> > , int> pd;
 
 void build(int node=1, int l=1, int r=n){
 	// cout << node << endl;

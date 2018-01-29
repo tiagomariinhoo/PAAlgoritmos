@@ -22,6 +22,14 @@ typedef pair<int,int> ii;
 int n;
 
 vi vec;
+
+void equalRange(){
+	std::pair<std::vector<int>::iterator,std::vector<int>::iterator> it;
+    		it = std::equal_range(sum.begin(), sum.end(),-(c[i] + d[j]));
+    		//It retorna o lower and upper bound;
+    		ans += it.second - it.first;
+}
+
 void lowerB(int v){
 	vector<int>::iterator it;
 	it = lower_bound(vec.begin(), vec.end(), v);
