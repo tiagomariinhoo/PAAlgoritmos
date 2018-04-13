@@ -27,6 +27,8 @@ int dy[] = {1, -1, 0, 0};
 int ddx[] = {1, 0};
 int ddy[] = {1, 1};
 
+//SEM REPETIR NUMEROS : 1 4 4 5, : 3
+
 set<int> st;
 set<int>::iterator it;
 
@@ -44,6 +46,40 @@ int main(){
 	}
 
 	cout << st.size() << endl;
+
+	return 0;
+}
+
+//PARA NUMEROS REPETIDOS : 1 4 4 5. : 4
+
+multiset<int> s;
+multiset<int> ::iterator it;
+
+int main(){
+	int n;
+	cin >> n;
+	vi vec;
+	for(int i=0;i<n;i++){
+		int a;
+		cin >> a;
+		vec.pb(a);
+	}
+
+	for(int i=0;i<sz(vec);i++){
+		s.insert(vec[i]);
+		it = s.upper_bound(vec[i]);
+
+		for(auto j : s) cout << j << " ";
+			cout << endl;
+
+		if(it != s.end()) s.erase(it);
+	}
+	
+	for(auto j  : s) cout << j << " ";
+		cout << endl;
+
+	cout << sz(s) << endl;
+
 
 	return 0;
 }
