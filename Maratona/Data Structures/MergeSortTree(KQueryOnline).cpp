@@ -58,12 +58,13 @@ void build(int node=1, int l=1, int r=n){
 	// } cout << endl;
 
 }
+
 //l start r end
 int query(int l, int r, int k, int node = 1, int start = 1, int end = n){
 	// cout << l << " - " << r << " - " << k << endl;
 	if(end < l or start > r) return 0;
 	if(l <= start and end <= r){
-		return upper_bound(tree[node].begin(), tree[node].end(), k) - tree[node].end();
+		return upper_bound(tree[node].begin(), tree[node].end(), k) - tree[node].begin();
 	}
 	int mid = (start + end) / 2;
 	return query(l, r, k, 2*node, start, mid) + query(l, r, k, 2*node+1, mid+1, end);
