@@ -90,6 +90,7 @@ void lazyUpdate(int l, int r, int val, int node = 1, int start = 1, int end = n)
 	tree[node] = tree[2*node] + tree[2*node+1];
 }
 
+
 int lazyQuery(int l, int r, int node = 1 , int start = 1, int end = n){
 	if(start > end or start > r or end < l) return 0;
 	if(lazy[node]!=0){
