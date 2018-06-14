@@ -32,7 +32,7 @@ int ddx[] = {1, 0};
 int ddy[] = {1, 1};
 
 //LCA CodCad
-#define MAXN 50500
+#define MAXN 1001
 #define MAXL 20
 
 int n;
@@ -93,20 +93,18 @@ int LCA(int u, int v){
 int main(){
 	ios_base::sync_with_stdio(false);
 	cin.tie(NULL);
-
+	
 	cin >> n;
 	for(int i=0;i<n-1;i++){
 		int a,b;
 		cin >> a >> b;
-		adj[a].pb(b);
-		adj[b].pb(a);
+		vec[a].pb(b);
+		vec[b].pb(a);
 	}
 
 	build();
 
-	//To pick path: 
-	// cout << nivel[u] + nivel[v] - 2*nivel[LCA(u,v)];
+	cout << nivel[3] + nivel[5] << endl;
 
 	return 0;
 }
-
