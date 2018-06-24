@@ -31,30 +31,65 @@ int dy[] = {1, 0, -1, 0};
 int ddx[] = {1, 0};
 int ddy[] = {1, 1};
 
-int k, m;
-lli pd[2000][2000];
-ii vec[2001];
+int n,m,s;
+vi vec[5001];
+int vis[5001];
+int pd[5001];
+int grau[5001];
+vi aa;
+
+int dfs(int x, bool at){
+	vis[x] = 1;
+	if(at) aa.pb(x);
+	int aux = 0;
+
+	for(auto i : vec[x]){
+		if(!vis[i]) aux += dfs(i, at) + 1;
+	}
+	return pd[x] = aux;
+}
+
+bool comp(ii a, ii b) { return a.F > b.F; }
 
 int main(){	
 	ios_base::sync_with_stdio(false);
 	cin.tie(NULL);
 
-	cin >> k >> m;
-	for(int i=1;i<=m;i++){
+	cin >> n >> m >> s;
+	for(int i=0;i<m;i++){
 		int a,b;
 		cin >> a >> b;
-		vec[i] = {a, b};
+		vec[a].pb(b);
+		grau[b]++;
 	}
 
-	for(int i=1;i<=m;i++){
-		for(int j=1;j<=k;j++){
-			int v = vec[i].S, w = vec[i].F;
-			if(j >= w) pd[i][j] = max(pd[i-1][j], pd[i-1][j - w] + v);
-			else pd[i][j] = pd[i-1][j];
+	dfs(s, true);
+	sort(aa.begin(), aa.end());
+	int ans = 0;
+	vector<ii> can;
+	memset(vis, 0, sizeof vis);
+	for(int i=1;i<=n;i++){
+		// if(!vis[i]){
+			can.pb({dfs(i, false)+1, i});
+			memset(vis, 0, sizeof vis);
+		// }
+	}
+
+	sort(can.begin(), can.end(), comp);
+	for(int i=1;i<=n;i++) if(!grau[i] and i != s){
+		dfs(i, false);
+		ans++;
+	}
+
+	for(int i=0;i<sz(can);i++){
+		int u = can[i].S;
+		if(!vis[u] and !binary_search(aa.begin(), aa.end(), u)){
+			ans++;
+			dfs(u, false);
 		}
 	}
 
-	cout << pd[m][k] << endl;
+	cout << ans << endl;
 
 	return 0;
 }

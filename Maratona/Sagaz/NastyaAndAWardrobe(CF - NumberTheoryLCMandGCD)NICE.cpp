@@ -31,30 +31,54 @@ int dy[] = {1, 0, -1, 0};
 int ddx[] = {1, 0};
 int ddy[] = {1, 1};
 
-int k, m;
-lli pd[2000][2000];
-ii vec[2001];
+int l, r, x, y;
 
+lli gcd(lli a, lli b){
+	while(1){
+		if(a == 0) return b;
+		b%=a;
+		if(b == 0) return a;
+		a %= b;
+	}
+}
+
+lli lcm(lli a, lli b){
+	lli temp = gcd(a,b);
+	return temp ? (a / temp*b) : 0;
+}
 int main(){	
 	ios_base::sync_with_stdio(false);
 	cin.tie(NULL);
 
-	cin >> k >> m;
-	for(int i=1;i<=m;i++){
-		int a,b;
-		cin >> a >> b;
-		vec[i] = {a, b};
+	cin >> l >> r >> x >> y;
+
+	lli ans = 0;
+
+	// cout << gcd(15,10) << " - " << lcm(15, 10) << endl;
+
+	// int xx = 16, yy = 16;
+	// for(int i=1;i<=100;i++){
+
+	// 	if(yy/i == 0) break;
+	// 	if(yy%i != 0) continue;
+	// 	cout << "I : " << i << endl;
+	// 	cout << xx*i << " - " << yy/i << endl;
+	// 	cout << "Res : ";
+	// 	cout << (xx*i)*(yy/i) << endl;
+	// }
+
+	for(int i=1;i<=100000;i++){
+		lli aa = x*i, bb = y/i;
+		if(y%i!=0) continue;
+		// cout << aa << " - " << bb << endl;
+		if(aa >= l and aa <= r and bb >= l and bb <= r and lcm(aa, bb) == y and gcd(aa, bb) == x and aa <= bb){
+			if(aa != bb)
+			ans+=2;
+			else ans++;
+		} else if(aa > bb) break;
 	}
 
-	for(int i=1;i<=m;i++){
-		for(int j=1;j<=k;j++){
-			int v = vec[i].S, w = vec[i].F;
-			if(j >= w) pd[i][j] = max(pd[i-1][j], pd[i-1][j - w] + v);
-			else pd[i][j] = pd[i-1][j];
-		}
-	}
-
-	cout << pd[m][k] << endl;
+	cout << ans << endl;
 
 	return 0;
 }
