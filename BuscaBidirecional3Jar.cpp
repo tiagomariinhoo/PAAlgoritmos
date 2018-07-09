@@ -319,6 +319,7 @@ int main(){
 }
 
 /*
+
 	                                                 Grande Média Pequena
 Situação inicial                                   8      0      0
 Despeja a água da grande até encher a pequena      5      0      3
@@ -329,4 +330,6 @@ Despeja toda a água da média na grande             7      0      1
 Despeja toda a água da pequena na média            7      1      0
 Despeja a água da grande até encher a pequena      4      1      3
 Despeja toda a água da pequena na média            4      4      0
+
+
 */
