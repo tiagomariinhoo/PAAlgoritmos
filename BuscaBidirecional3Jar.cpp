@@ -37,12 +37,10 @@ struct State{
 
 queue<State> q1, q2;
 vector<State> vis, vis2;
+State ans, ans2;
+bool at1, at2;
 
 bool test(State state, int a){
-	// cout << "a : " << a << endl;
-	// for(int i=0;i<3;i++){
-	// 	cout << state.vec[i] << " ";
-	// } cout << endl <<  " -- " << endl;
 
 	if(a == 1){
 		if(!sz(vis)) return false;
@@ -161,28 +159,6 @@ vector<State> getState(State aux, int a){
 }
 
 bool have(State state, int a){
-	// cout << sz(vis) << " - " << sz(vis2) << endl;
-	// if(sz(vis) > 0 and sz(vis2) > 0){
-	// 	cout << "Com : " << endl;
-	// 	for(int i=0;i<sz(vis);i++){
-	// 		for(int j=0;j<3;j++){
-	// 			cout << vis[i].vec[j] << " ";
-	// 		} cout << endl;
-	// 	} cout << endl;
-	// 	cout << " - " << endl;
-	// 	for(int i=0;i<sz(vis2);i++){
-	// 		for(int j=0;j<3;j++){
-	// 			cout << vis2[i].vec[j] << " ";
-	// 		} cout << endl;
-	// 	} cout << endl;
-
-	// 	cout << "State : " << endl;
-	// 	for(int i=0;i<3;i++) cout << state.vec[i] << " ";
-	// 	cout << endl;		
-
-	// 	cout << "Fim !" << endl;
-
-	// }
 
 	if(a == 1){
 		for(int i=0;i<sz(vis);i++){
@@ -208,63 +184,122 @@ bool have(State state, int a){
 	return false;
 }
 
+bool test2(State cur, State atual, int a){
+	vector<State> aux2 = getState(cur, 1);
+
+	bool at = false;
+	for(int i=0;i<sz(aux2);i++){
+		int c = 0;
+		for(int j=0;j<3;j++){
+			// cout << aux2[i].vec[j] << " ";
+			if(aux2[i].vec[j] == atual.vec[j]) c++;
+		}
+		if(c == 3) at = true;
+	}
+
+	return at;
+}
+
 bool getPath(int a){
 	if(a == 1){
 		vector<State> aux;
+		bool att = false;
 		while(sz(q1)){
 			State u = q1.front();
 			q1.pop();
-			vis.pb(u);
-			vector<State> aux2 = getState(u, a);
 
-			cout << "A : 1 " << endl;
-			for(int i=0;i<sz(aux2);i++){
-				for(int j=0;j<3;j++) cout << aux2[i].vec[j] << " ";
-					cout << endl;
-			} cout << " - " << endl;
+			// if(test(u, 1))
+			vis.pb(u);
+
+			vector<State> aux2 = getState(u, a);
 
 			for(auto i : aux2){
 				if(!test(i, a)) continue;
-					vis.pb(i);
+				// if(test(i, 1)){
+					// vis.pb(i);
+				// } 
 					aux.pb(i);
+
 					if(have(i, 2)){
-						return true;
+						ans = i;
+						att = true;
 					}
 			}
 		}
 		for(auto i : aux) q1.push(i);
+		return att;
 	} else{
 		vector<State> aux;
+		bool att = false;
 		while(sz(q2)){
 			State u = q2.front();
 			q2.pop();
-			vis2.pb(u);
-			vector<State> aux2 = getState(u, a);
-			cout << "A : 2" << endl;
-			cout << sz(aux2) << endl;
-			for(int i=0;i<sz(aux2);i++){
-				for(int j=0;j<3;j++){
-					cout << aux2[i].vec[j] << " ";
-				} cout << endl;
-			} cout << " - " << endl;
 
+			// if(test(u, 2)){
+			vis2.pb(u);
+			// }
+
+			vector<State> aux2 = getState(u, a);
 			for(auto i : aux2){
 				if(!test(i, a)) continue;
-				vis.pb(i);
-				aux.pb(i);
+				if(!test2(i, u, a)) continue;
+
+				// if(test(i, 2)){
+					// vis2.pb(i);
+				// }
+
+
+					aux.pb(i);
 				if(have(i, 2)){
-					return true;
+					att = true;
+					ans2 = i;
 				}
 			}
 		}
 		for(auto i : aux) q2.push(i);
+		return att;
 	}
+	return false;
+}
+
+bool Intersection(){
+
+	for(int i=0;i<sz(vis);i++){
+		for(int j=0;j<sz(vis2);j++){
+			int c = 0;
+			for(int k=0;k<3;k++){
+				if(vis[i].vec[k] == vis2[j].vec[k]) c++;
+			}
+			if(c == 3) return true;
+		}
+	}
+
+	return false;
 }
 
 void pathBiSearch(){
 	while(!q1.empty() and !q2.empty()){
-		if(getPath(1) and getPath(2)){
+
+		bool aa = getPath(1);
+		bool bb = getPath(2);
+
+		if(Intersection()){
+
+			cout << "Vis 1 : " << endl;
+			for(int i=0;i<sz(vis);i++){
+				for(int j=0;j<3;j++){
+					cout << vis[i].vec[j] << " ";
+				} cout << endl;
+			} cout <<"  -- - -  " << endl;
+			cout << "Vis 2 : " << endl;
+			for(int i=0;i<sz(vis2);i++){
+				for(int j=0;j<3;j++){
+					cout << vis2[i].vec[j] << " ";
+				} cout << endl;
+			} cout << " - - - - " << endl;
+
 			cout << "ACHOU!" << endl;
+
 			return ;
 		}
 	}
@@ -282,3 +317,16 @@ int main(){
 
 	return 0;
 }
+
+/*
+	                                                 Grande Média Pequena
+Situação inicial                                   8      0      0
+Despeja a água da grande até encher a pequena      5      0      3
+Despeja toda a água da pequena na média            5      3      0
+Despeja a água da grande até encher a pequena      2      3      3
+Despeja a água da pequena até encher a média       2      5      1
+Despeja toda a água da média na grande             7      0      1
+Despeja toda a água da pequena na média            7      1      0
+Despeja a água da grande até encher a pequena      4      1      3
+Despeja toda a água da pequena na média            4      4      0
+*/
