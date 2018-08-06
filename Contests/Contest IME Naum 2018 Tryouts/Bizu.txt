@@ -1,0 +1,12 @@
+A - dp (cuidado com a memória, pode fazer com 2 linhas só na matriz, e pode usar bitmask) ou exponenciacao de matrizes
+B - strings simples
+C - backtracking
+D - busca binária (dava pra pegar a raiz e fazer uma busca linear por lado que fosse melhor)
+E - FFT
+F - dsu (só dá pq é offline, aí dá pra inverter as queries)
+G - teoria dos números com inclusão e exclusão (dá pra usar mobius pra fazer inclusão exclusão)
+H - matemática / achar o padrão 
+I - geometria simples (checar se um ponto está dentro de um polígono convexo em O(N) basta passar por toda aresta e ver se o ponto está do lado certo daquela aresta. Se valer pra todas então está dentro. Produto vetorial facilita a conta)
+J - BIT/segtree simples
+K - Dijkstra (separa cada nó em 3, um pra 0 mod 3, outro pra 1 mod 3 e outro pra 2 mod 3. Cuidado que se entrar no nó final tem que parar)
+L - maior caminho no DAG (o enunciado tava meio bugado, mas o announcement corrige e depois eu corrijo no enunciado mesmo) (tem que achar os pontos pra montar o grafo mais rápido que brutar N^2. Dá pra fazer com busca binária tipo o problema Constelações ou ter um set com todos os pontos e testar todos os possíveis na frente)

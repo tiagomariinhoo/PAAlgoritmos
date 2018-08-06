@@ -1,31 +1,112 @@
-// LCA pre-pro O(n log(n)) // query O (log(n))
 #include <bits/stdc++.h>
 using namespace std;
+ 
+#define DEBUG if(1)
+#define MAXN 50500
+#define MAX INT_MAX
+#define MAXLL LLONG_MAX
+#define MAXU ULLONG_MAX
+#define MIN -2000000
+#define endl "\n"
+#define INF 99999999
+#define MOD 1000000007
+#define s(n) scanf("%d", &n)
+#define ss(a,b) scanf("%d %d",&a,&b)
+#define pb push_back
+#define mp make_pair
+#define M_PI 3.14159265358979323846
+#define sz(a) int(a.size())
+#define lli long long int
+#define rep(i,a,n) for (int i=a;i<n;i++)
+#define ler(a,n,vec) for(int i=0;i<n;i++)s(a), vec.pb(a)
+typedef vector<lli> vi;
+typedef vector<vi> vvi;
+typedef pair<int,int> ii;
+typedef pair<string, pair<int, char> > ps;
+#define DEBUG if(1)
+#define F first
+#define S second
+int dx[] = {0, 1, 0, -1};
+int dy[] = {1, 0, -1, 0};
+int ddx[] = {1, 0};
+int ddy[] = {1, 1};
 
-const int maxn = 1e6+10;
-const int maxlg = 20;
-int par[maxn][maxlg], dep[maxn], tin[maxn], tout[maxn];
-vector<int>adj[maxn];
-int timer; // start 0
-void dfs(int v, int p, int h = 0){ // dfs(root, root)
-	tin[v] = ++timer;
-	dep[v] = h;
-	par[v][0] = p;
-	rep(i, 1, maxlg)par[v][i] = par[par[v][i-1]][i-1];
-	rep(i, 0, sz(adj[v]))if(adj[v][i] != p)dfs(adj[v][i], v, h+1);
-	tout[v] = timer;
+//LCA CodCad
+#define MAXN 50500
+#define MAXL 20
+
+int n;
+int nivel[MAXN];
+int ancestral[MAXN][MAXL];
+int pai[MAXN];
+
+vi adj[MAXN];
+
+
+void dfs(int u){
+
+	for(int i=0;i<sz(adj[u]);i++){
+		int v = adj[u][i];
+		if(nivel[v] == -1){
+			pai[v] = u;
+			nivel[v] = nivel[u] + 1;
+			dfs(v);
+		}
+	}
 }
-bool upper(int u, int v){
-	return (tin[u] <= tin[v] && tout[u] >= tout[v]);
+
+void build(){
+	memset(pai, -1, sizeof pai);
+	memset(nivel, -1, sizeof nivel);
+	memset(ancestral, -1, sizeof ancestral);
+
+	nivel[1] = 0;
+	dfs(1);
+
+	for(int i=1;i<=n;i++) ancestral[i][0] = pai[i];
+
+	for(int j=1;j<MAXL;j++){
+		for(int i=1;i<=n;i++){
+			ancestral[i][j] = ancestral[ancestral[i][j-1]][j-1];
+		}
+	}
 }
-int lca(int u, int v){
-	if(upper(u, v))return u;
-	if(upper(v, u))return v;
-	per(i, 0, maxlg)
-		if(!upper(par[u][i], v))u = par[u][i];
-	return par[u][0];
+
+int LCA(int u, int v){
+	if(nivel[u] < nivel[v]) swap(u, v);
+	for(int i = MAXL - 1; i>=0;i--){
+		if(nivel[u] - (1 << i) >= nivel[v]) u = ancestral[u][i];
+	}
+	
+	if(u == v) return u;
+
+	for(int i=MAXL-1;i>=0;i--){
+		if(ancestral[u][i] != -1 and ancestral[u][i] != ancestral[v][i]){
+			u = ancestral[u][i];
+			v = ancestral[v][i];
+		}
+	}
+	return pai[u];
 }
+
+
 int main(){
-	timer  = 0;
+	ios_base::sync_with_stdio(false);
+	cin.tie(NULL);
+
+	cin >> n;
+	for(int i=0;i<n-1;i++){
+		int a,b;
+		cin >> a >> b;
+		adj[a].pb(b);
+		adj[b].pb(a);
+	}
+
+	build();
+
+	//To pick path: 
+	// cout << nivel[u] + nivel[v] - 2*nivel[LCA(u,v)];
+
 	return 0;
 }
+
