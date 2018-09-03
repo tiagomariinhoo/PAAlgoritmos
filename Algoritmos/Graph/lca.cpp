@@ -74,6 +74,7 @@ void build(){
 
 int LCA(int u, int v){
 	if(nivel[u] < nivel[v]) swap(u, v);
+	//Sobe o nivel pra deixar igual em no max logn passos
 	for(int i = MAXL - 1; i>=0;i--){
 		if(nivel[u] - (1 << i) >= nivel[v]) u = ancestral[u][i];
 	}
