@@ -53,15 +53,18 @@ int query(int l, int r, int node=1, int start=1, int end = n){
 }
 
 
-void updateRange(int l, int r, int node = 1, int start = 1, int end = n){
-	if(start == end) tree[node] = crivo[tree[node]] + 1, tree2[node] = crivo[tree2[node]] + 1;
-	else{
-		int mid = (start + end) >> 1;
-		if(l <= mid and tree2[node] > 2) update(l, r, 2*node, start, mid);
-		if(mid + 1 <= r and tree2[node] > 2) update(l, r, 2*node+1, mid+1, end);
-		tree[node] = tree[2*node+1] + tree[2*node];
-		tree2[node] = max(tree2[2*node], tree2[2*node+1]);
+void updateRange(int l, int r, int val, int node = 1, int start = 1, int end = n){
+	if(start > end or start > r or end < l) return ;
+	if(start == end){
+		tree[node] += val;
+		return ;
 	}
+
+	int mid = (start + end) >> 1;
+	updateRange(l, r, val, 2*node, start, mid);
+	updateRange(l, r, val, 2*node+1, mid+1, end);
+
+	tree[node] = tree[2*node+1] + tree[2*node];
 }
 
 void lazyUpdate(int l, int r, int val, int node = 1, int start = 1, int end = n){
