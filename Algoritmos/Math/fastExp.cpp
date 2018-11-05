@@ -57,3 +57,38 @@ int main(){
 
 	return 0;
 }
+
+// MATRIX EXPONENTIATION
+typedef vector<vector<lli> > matrix;
+
+matrix operator *(matrix a, matrix b){
+	int n = sz(a);
+	int m = sz(b);
+	int p = sz(b[0]);
+	matrix c;
+	c.resize(n);
+	for(int i=0;i<n;i++){
+		c[i].assign(p, 0);
+		for(int j=0;j<p;j++) for(int k=0;k<m;k++) c[i][j] += (a[i][k] * b[k][j])%MOD;
+	}
+	return c;
+}
+
+matrix id(int n){
+	matrix aux;
+	for(int i=0;i<n;i++){
+		vi aux2;
+		for(int j=0;j<n;j++) aux2.pb(0);
+		aux.pb(aux2);
+	}
+	for(int i=0;i<n;i++) for(int j=0;j<n;j++) if(i == j) aux[i][j] = 1;
+	return aux;
+}
+
+matrix matrixExp(matrix a, int n){
+	if(n == 0) return id(sz(a));
+	matrix c = matrixExp(a, n/2);
+	c = (c*c);
+	if(n%2!=0) c = (c*a);
+	return c;
+}
