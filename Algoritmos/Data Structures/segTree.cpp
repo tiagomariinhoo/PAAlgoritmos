@@ -52,6 +52,21 @@ int query(int l, int r, int node=1, int start=1, int end = n){
 	return (p1+p2);
 }
 
+/*
+Query para pegar o max correta
+*/
+lli queryMax(int l, int r, int node, int start, int end){
+  if(l == start and end == r) return tree[node];
+  int mid = (start + end) >> 1;
+  if(l > mid){
+    return queryMax(l, r, node << 1 | 1, mid + 1, end);
+  } else if(r < mid + 1){
+    return queryMax(l, r, node << 1, start, mid);
+  } else {
+    return max(queryMax(l, min(mid, r), node << 1, start, mid), 
+      queryMax(max(mid+1, l), r, node << 1 | 1, mid + 1, end));
+  }
+}
 
 void updateRange(int l, int r, int val, int node = 1, int start = 1, int end = n){
 	if(start > end or start > r or end < l) return ;
