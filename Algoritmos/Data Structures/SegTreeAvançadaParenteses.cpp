@@ -38,7 +38,7 @@ int ddy[] = {1, 1};
 
 string s;
 int n,m;
-int t[2500000], o[2500000], c[25 d00000];
+int t[2500000], o[2500000], c[2500000];
 
 void build(int node = 1, int start = 0, int end = n-1){
 	if(start == end){
