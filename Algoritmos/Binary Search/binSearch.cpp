@@ -19,37 +19,46 @@ typedef pair<int, ii > iii;
 #define F first
 #define S second
 vi vec;
-void upper(int x){
-	int com = 0;
-	int fim = sz(vec);
-	int mid;
-	
-	while(com<fim){
-		mid = (com + fim) / 2;
-		if(vec[mid] >= x){
-			fim = mid;
-		} else {
-			com = mid + 1;
-		}
-	}
 
-	cout << "Upper : " << vec[com] << endl;
+//CORRETO
+int lowerBound(int atual){
+  int com = 0, fim = n-1;
+  int ans = 0;
+  while(com < fim){
+    int mid = (com + fim) >> 1;
+    if(atual <= vec[mid]) fim = mid;
+    else com = mid + 1;
+  }
+
+  return com;
 }
 
-void lower(int x){
-	int com = 0;
-	int fim = sz(vec);
-	int mid;
+int bs_upper_bound(int a[], int n, int x) {
+    int l = 0;
+    int h = n; // Not n - 1
+    while (l < h) {
+        int mid = (l + h) / 2;
+        if (x >= a[mid]) {
+            l = mid + 1;
+        } else {
+            h = mid;
+        }
+    }
+    return l;
+}
 
-	while(com < fim){
-		mid = (com + fim + 1) / 2;
-		if(vec[mid]<= x){
-			com = mid;
-		}
-		else fim = mid - 1;
-	}
-
-cout << "Lower : " << vec[com] << endl;
+int bs_lower_bound(int a[], int n, int x) {
+    int l = 0;
+    int h = n; // Not n - 1
+    while (l < h) {
+        int mid = (l + h) / 2;
+        if (x <= a[mid]) {
+            h = mid;
+        } else {
+            l = mid + 1;
+        }
+    }
+    return l;
 }
 
 void bina(int x){
