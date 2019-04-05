@@ -31,6 +31,13 @@ void printLIS(int ans){
 
 void LIS(){
   int ans = 0;
+  /*
+  5
+  1 2 3 5 5
+  lower bound para a sequencia strictly
+    1 2 3 5
+  upper bound para o 1 2 3 4 5 5
+  */
   for(int i=1;i<=n;i++){
     f[i] = lower_bound(b+1, b+ans+1, a[i]) - b;
     ans = max(ans, f[i]);
