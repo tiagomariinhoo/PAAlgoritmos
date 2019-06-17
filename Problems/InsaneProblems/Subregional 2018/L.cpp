@@ -32,6 +32,39 @@ int ddy[] = {1, 1};
 #define MAXN 100001
 #define MAXL 20
 
+/*
+
+Sobre a L
+
+Basicamente
+Se os caminhos tem nós em comum
+Vai ficar algo do tipo
+A        B
+  \___/
+  /     \
+C        D
+
+Nesse caso, Y vai ser igual a distancia
+ de A até C + a distancia de B até D
+
+Ou
+
+A        B
+  \___/
+  /     \
+D        C
+
+Nesse caso, Y vai ser igual a distancia 
+de A até D + a distancia de B até C
+
+Então o que sobra é o caminho em comum, 
+mas ele tá sendo contado 2 vezes
+Por isso divido por 2
+E adiciono 1 no fim pois queremos o 
+numero de vertices em comum, ao invés do 
+numero de arestas
+*/
+
 int n, q;
 vi vec[MAXN];
 int ancestral[MAXN][MAXL];
