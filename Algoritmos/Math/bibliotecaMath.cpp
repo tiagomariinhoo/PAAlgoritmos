@@ -93,3 +93,10 @@ long long int divMod(long long int x,long long int y,long long int n)
 {
     return mulMod(x,invMod(y,n),n);
 }
+
+lli modSum(lli a, lli b){
+  a += b;
+  while(a >= MOD) a -= MOD;
+  while(a < 0) a += MOD;
+  return a;
+}

@@ -28,7 +28,7 @@ int ddx[] = {1, 0};
 int ddy[] = {1, 1};
 
 int at[MAX];
-	int n;
+int n;
 
 void crivo(){
 	at[1] = 1;
