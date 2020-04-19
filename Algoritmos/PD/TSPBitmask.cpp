@@ -39,6 +39,8 @@ int dist[10][10] =
   {25, 34, 10, 0}
 };
 
+//GetPath tsp https://codeforces.com/blog/entry/47782
+
 int tsp(int mask, int pos){
   if(mask == ((1 << n) - 1)) return dist[pos][0];
 
