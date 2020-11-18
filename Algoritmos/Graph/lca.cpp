@@ -67,7 +67,9 @@ void build(){
 
 	for(int j=1;j<MAXL;j++){
 		for(int i=1;i<=n;i++){
-			ancestral[i][j] = ancestral[ancestral[i][j-1]][j-1];
+			if(ancestral[i][j-1] != -1) {
+				ancestral[i][j] = ancestral[ancestral[i][j-1]][j-1];
+			}
 		}
 	}
 }
